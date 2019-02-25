@@ -14,7 +14,7 @@
 
 " Themes:
 " Create a colors directory ~/.config/nvim/colors
-" Create a colors directory and then curl them with -o option to write a file
+" and then curl them with -o option to write a file
 
 " Vimplug:-----------------------------------------------------------------{{{1
 
@@ -44,20 +44,18 @@ set nocompatible
 filetype plugin on
 syntax on
 set encoding=utf-8
-set bg=dark
-set mouse=a
+" set mouse=a
 set clipboard=unnamedplus
+set shortmess+=Iw
 
 
 " Basic Settngs:-----------------------------------------------------------{{{1
 
-set shortmess+=Iw
 set number
 
 set list
 set showbreak=↳\
 set listchars=tab:›\ ,trail:–,extends:»,precedes:«,eol:¬
-set cursorline
 set title
 set scrolloff=5
 " set noshowmode
@@ -78,6 +76,29 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 nnoremap <silent> <leader>nh :nohl<cr>
+
+" Themes:------------------------------------------------------------------{{{1
+
+" place in the colors directory ~/.config/nvim/colors using curl -o
+colorscheme badwolf "https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim
+" colorscheme molokai "https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+
+set background=dark
+set cursorline
+highlight cursorline ctermbg=234 ctermfg=none cterm=none
+highlight colorcolumn ctermbg=darkred
+highlight! link TermCursor Cursor
+highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+highlight nontext ctermfg=darkgrey ctermbg=none
+
+" Finding And Autocomplete:------------------------------------------------{{{1
+
+set path+=**
+set wildmenu
+set ignorecase
+set smartcase
+set showmatch
+set wildmode=longest,list,full
 
 " Folding:-----------------------------------------------------------------{{{1
 
@@ -109,11 +130,6 @@ set foldtext=MyFoldText()
 " Toggle relativenumber:
 	inoremap <silent> <leader>u <esc>:set relativenumber!<CR>a
 	nnoremap <silent> <leader>u :set relativenumber!<CR><esc>
-
-
-" Enable autocompletion:
-	set wildmode=longest,list,full
-
 
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -180,7 +196,7 @@ set foldtext=MyFoldText()
 	autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo \| set bg=light
 
 " Automatically deletes all trailing whitespace on save.
-	autocmd BufWritePre * %s/\s\+$//e
+"	autocmd BufWritePre * %s/\s\+$//e
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
 	autocmd BufWritePost ~/.bmdirs,~/.bmfiles !shortcuts
