@@ -14,7 +14,9 @@
 
 " Themes:
 " Create a colors directory ~/.config/nvim/colors
+" cd ~/.config/nvim/colors
 " and then curl them with -o option to write a file
+" curl -fL https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -o badwolf.vim
 
 " Vimplug:-----------------------------------------------------------------{{{1
 
@@ -40,6 +42,9 @@ call plug#end()
 
 " General setup:-----------------------------------------------------------{{{1
 
+let mapleader = ","
+let maplocalleader = "\\"
+
 set nocompatible
 filetype plugin on
 syntax on
@@ -47,6 +52,9 @@ set encoding=utf-8
 " set mouse=a
 set clipboard=unnamedplus
 set shortmess+=Iw
+
+" Splits open at the bottom and right:
+set splitbelow splitright
 
 
 " Basic Settngs:-----------------------------------------------------------{{{1
@@ -72,10 +80,6 @@ set colorcolumn=+1
 set splitbelow
 set splitright
 
-let mapleader = ","
-let maplocalleader = "\\"
-
-nnoremap <silent> <leader>nh :nohl<cr>
 
 " Themes:------------------------------------------------------------------{{{1
 
@@ -99,6 +103,135 @@ set ignorecase
 set smartcase
 set showmatch
 set wildmode=longest,list,full
+
+" Useful F-key mappings:---------------------------------------------------{{{1
+map <F2> <ESC>i#!/bin/bash<ESC>o<ESC>
+map <F3> <ESC>i#!/usr/local/bin/python3<ESC>o<ESC>
+map <F4> <ESC>o# This file was created on <ESC>:r!date "+\%x"<ESC>kJ0<ESC>
+map <F5> <ESC>o# Author: George Kaimakis - https://github.com/geokai<ESC>o<ESC>
+
+" Re-Mappings:-------------------------------------------------------------{{{1
+
+" Toggle relativenumber:
+" use relative numbering - Use 'vim-unimpaired' [or & ]or, to toggle: =or
+" inoremap <silent> <leader>u <esc>:set relativenumber!<CR>a
+" nnoremap <silent> <leader>u :set relativenumber!<CR><esc>
+
+" Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
+vnoremap <C-c> "+y
+" map <C-p> "+P
+
+" open vimrc in a split for a quick edit
+nnoremap <leader>ev :tabnew $MYVIMRC<cr>
+" source the vimrc file
+nnoremap <leader>sv :source $MYVIMRC<cr>
+" -all-caps & continue in INSERT mode
+inoremap <c-u> <esc>viwUea
+" -all-caps & continue in NORMAL mode
+nnoremap <c-u> viwUea<ESC>
+" -add missing ':' to end of statements
+nnoremap <leader>: mqA:<ESC>`q
+" -add missing ';' to end of statements
+nnoremap <leader>; mqA;<ESC>`q
+" -search highlighting off
+nnoremap <silent> <leader>nh :nohl<cr>
+
+" Nerd tree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Open my bibliography file in split
+map <leader>b :vsp<space>$REFBIB<CR>
+" map <leader>r :vsp<space>$REFER<CR>
+
+" quick pairs in INSERT mode
+inoremap <leader>' ''<ESC>i
+inoremap <leader>" ""<ESC>i
+inoremap <leader>* **<ESC>i
+inoremap <leader>( ()<ESC>i
+inoremap <leader>[ []<ESC>i
+inoremap <leader>t[ [  ]<ESC>hi
+inoremap <leader>{ {}<ESC>i
+inoremap <leader>< <><ESC>i
+" surround a word with ... pairs - Use 'vim-surround'
+" nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+" nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+" nnoremap <leader>( viw<esc>a)<esc>hbi(<esc>lel
+" nnoremap <leader>{ viw<esc>a}<esc>hbi{<esc>lel
+" nnoremap <leader>< viw<esc>a><esc>hbi<<esc>lel
+" nnoremap <leader>[ viw<esc>a]<esc>hbi[<esc>lel
+" nnoremap <leader>__ viw<esc>a__<esc>hbi__<esc>lel
+" exit pair(s) to end of line:
+inoremap <c-l> <ESC>A
+" exit nested pair to within parent pair:
+inoremap <c-j> <ESC>la
+" set up function block:
+inoremap <leader>{{ {}<ESC>i<CR><ESC><<O
+
+" Disable the arrow keys:--------------------------------------------------{{{2
+" : in NORMAL mode
+nnoremap <up> <Nop>
+nnoremap <left> <Nop>
+nnoremap <right> <Nop>
+nnoremap <down> <Nop>
+" : in INSERT mode
+inoremap <up> <Nop>
+inoremap <left> <Nop>
+inoremap <right> <Nop>
+inoremap <down> <Nop>
+" : in VISUAL mode
+vnoremap <up> <Nop>
+vnoremap <left> <Nop>
+vnoremap <right> <Nop>
+vnoremap <down> <Nop>
+" 2}}}
+
+" EasyMotion:--------------------------------------------------------------{{{1
+
+" Remap EasyMotion leader key:
+map <leader> <Plug>(easymotion-prefix)
+
+" Character-wise motion
+nmap <leader>s <Plug>(easymotion-overwin-f)
+
+" Disable default mappings:
+let g:EasyMotion_do_mapping = 0
+
+" line-wise motion:
+let g:EasyMotion_startofline = 0
+
+map <leader>j <Plug>(easymotion-j)
+map <leader>J <Plug>(easymotion-sol-j)
+" nmap <leader>j <Plug>(easymotion-overwin-line)
+map <leader>k <Plug>(easymotion-k)
+map <leader>K <Plug>(easymotion-sol-k)
+" nmap <leader>k <Plug>(easymotion-overwin-line)
+
+" Turn on case insensitive feature:
+let g:EasyMotion_smartcase = 1
+
+" Mappings:
+
+" -bd- for bidirectional motion with word-wise
+map <leader>w <Plug>(easymotion-bd-w)
+nmap <leader>w <Plug>(easymotion-bd-w)
+map <leader>W <Plug>(easymotion-bd-W)
+
+" end-of-word motion
+map <leader>e <Plug>(easymotion-bd-e)
+map <leader>E <Plug>(easymotion-bd-E)
+
+" Navigation:--------------------------------------------------------------{{{1
+" Shortcutting split navigation, saving a keypress:
+" map <C-h> <C-w>h
+" map <C-j> <C-w>j
+" map <C-k> <C-w>k
+" map <C-l> <C-w>l
+
+" navigating between vim tabs
+nnoremap <leader>n <ESC>:tabn<CR>
+nnoremap <leader>p <ESC>:tabp<CR>
+
 
 " Folding:-----------------------------------------------------------------{{{1
 
@@ -127,10 +260,6 @@ set foldtext=MyFoldText()
 
 " 1}}}
 
-" Toggle relativenumber:
-	inoremap <silent> <leader>u <esc>:set relativenumber!<CR>a
-	nnoremap <silent> <leader>u :set relativenumber!<CR><esc>
-
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
@@ -140,13 +269,6 @@ set foldtext=MyFoldText()
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>o :setlocal spell! spelllang=en_us<CR>
 
-" Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
-	set splitbelow splitright
-
-" Nerd tree
-	map <C-n> :NERDTreeToggle<CR>
-	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 " vimling:
 	nm <leader>d :call ToggleDeadKeys()<CR>
 	imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
@@ -154,18 +276,8 @@ set foldtext=MyFoldText()
 	imap <leader>i <esc>:call ToggleIPA()<CR>a
 	nm <leader>q :call ToggleProse()<CR>
 
-" Shortcutting split navigation, saving a keypress:
-	map <C-h> <C-w>h
-	map <C-j> <C-w>j
-	map <C-k> <C-w>k
-	map <C-l> <C-w>l
-
 " Check file in shellcheck:
-	map <leader>s :!clear && shellcheck %<CR>
-
-" Open my bibliography file in split
-	map <leader>b :vsp<space>$BIB<CR>
-	map <leader>r :vsp<space>$REFER<CR>
+	" map <leader>s :!clear && shellcheck %<CR>
 
 " Replace all is aliased to S.
 	" nnoremap S :%s//g<Left><Left>
@@ -186,10 +298,6 @@ set foldtext=MyFoldText()
 	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 	autocmd BufRead,BufNewFile *.tex set filetype=tex
 
-" Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
-	vnoremap <C-c> "+y
-	map <C-p> "+P
-
 " Enable Goyo by default for mutt writting
 	" Goyo's width will be the line limit in mutt.
 	autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
@@ -209,7 +317,7 @@ set foldtext=MyFoldText()
 	vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 	map <leader><leader> <Esc>/<++><Enter>"_c4l
 
-"""LATEX
+"""LATEX:------------------------------------------------------------------{{{1
 	" Word count:
 	autocmd FileType tex map <leader>w :w !detex \| wc -w<CR>
 	" Code snippets
@@ -249,7 +357,7 @@ set foldtext=MyFoldText()
 	autocmd FileType tex inoremap ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
 	autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
 
-"""HTML
+"""HTML:-------------------------------------------------------------------{{{1
 	autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
 	autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i
 	autocmd FileType html inoremap ,1 <h1></h1><Enter><Enter><++><Esc>2kf<i
@@ -294,13 +402,12 @@ set foldtext=MyFoldText()
 	autocmd FileType html inoremap ò &ograve;
 	autocmd FileType html inoremap ù &ugrave;
 
-
-""".bib
+""".bib:-------------------------------------------------------------------{{{1
 	autocmd FileType bib inoremap ,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
 	autocmd FileType bib inoremap ,b @book{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>6kA,<Esc>i
 	autocmd FileType bib inoremap ,c @incollection{<Enter>author<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>booktitle<Space>=<Space>{<++>},<Enter>editor<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
 
-"MARKDOWN
+"""MARKDOWN:---------------------------------------------------------------{{{1
 	autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
 	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
 	autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
@@ -317,7 +424,7 @@ set foldtext=MyFoldText()
 	autocmd Filetype rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
 	autocmd Filetype rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
 
-""".xml
+""".xml:-------------------------------------------------------------------{{{1
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
 	autocmd FileType xml inoremap ,a <a href="<++>"><++></a><++><Esc>F"ci"
-
+" 1}}}
