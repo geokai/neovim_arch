@@ -15,7 +15,7 @@
 " Themes:
 " Create a colors directory ~/.config/nvim/colors
 " cd ~/.config/nvim/colors
-" and then curl them with -o option to write a file
+" and then curl them with -o option to write a file, e.g.
 " curl -fL https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -o badwolf.vim
 
 " Vimplug:-----------------------------------------------------------------{{{1
@@ -53,10 +53,6 @@ set encoding=utf-8
 set clipboard=unnamedplus
 set shortmess+=Iw
 
-" Splits open at the bottom and right:
-set splitbelow splitright
-
-
 " Basic Settngs:-----------------------------------------------------------{{{1
 
 set number
@@ -66,7 +62,7 @@ set showbreak=↳\
 set listchars=tab:›\ ,trail:–,extends:»,precedes:«,eol:¬
 set title
 set scrolloff=5
-" set noshowmode
+set noshowmode
 
 " Tabs, spaces and wrapping
 set tabstop=4
@@ -79,7 +75,6 @@ set colorcolumn=+1
 " Splits - feels more natural
 set splitbelow
 set splitright
-
 
 " Themes:------------------------------------------------------------------{{{1
 
@@ -189,10 +184,10 @@ vnoremap <down> <Nop>
 " EasyMotion:--------------------------------------------------------------{{{1
 
 " Remap EasyMotion leader key:
-map <leader> <Plug>(easymotion-prefix)
+map <localleader> <Plug>(easymotion-prefix)
 
 " Character-wise motion
-nmap <leader>s <Plug>(easymotion-overwin-f)
+nmap <localleader>s <Plug>(easymotion-overwin-f)
 
 " Disable default mappings:
 let g:EasyMotion_do_mapping = 0
@@ -200,28 +195,28 @@ let g:EasyMotion_do_mapping = 0
 " line-wise motion:
 let g:EasyMotion_startofline = 0
 
-map <leader>j <Plug>(easymotion-j)
-map <leader>J <Plug>(easymotion-sol-j)
-" nmap <leader>j <Plug>(easymotion-overwin-line)
-map <leader>k <Plug>(easymotion-k)
-map <leader>K <Plug>(easymotion-sol-k)
-" nmap <leader>k <Plug>(easymotion-overwin-line)
+map <localleader>j <Plug>(easymotion-j)
+map <localleader>J <Plug>(easymotion-sol-j)
+" nmap <localleader>j <Plug>(easymotion-overwin-line)
+map <localleader>k <Plug>(easymotion-k)
+map <localleader>K <Plug>(easymotion-sol-k)
+" nmap <localleader>k <Plug>(easymotion-overwin-line)
 
 " Turn on case insensitive feature:
 let g:EasyMotion_smartcase = 1
 
 " Mappings:
-
 " -bd- for bidirectional motion with word-wise
-map <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-bd-w)
-map <leader>W <Plug>(easymotion-bd-W)
+map <localleader>w <Plug>(easymotion-bd-w)
+nmap <localleader>w <Plug>(easymotion-bd-w)
+map <localleader>W <Plug>(easymotion-bd-W)
 
 " end-of-word motion
-map <leader>e <Plug>(easymotion-bd-e)
-map <leader>E <Plug>(easymotion-bd-E)
+map <localleader>e <Plug>(easymotion-bd-e)
+map <localleader>E <Plug>(easymotion-bd-E)
 
 " Navigation:--------------------------------------------------------------{{{1
+
 " Shortcutting split navigation, saving a keypress:
 " map <C-h> <C-w>h
 " map <C-j> <C-w>j
@@ -232,7 +227,6 @@ map <leader>E <Plug>(easymotion-bd-E)
 nnoremap <leader>n <ESC>:tabn<CR>
 nnoremap <leader>p <ESC>:tabp<CR>
 
-
 " Folding:-----------------------------------------------------------------{{{1
 
 highlight Foldcolumn ctermfg=Darkgrey ctermbg=0 cterm=BOLD
@@ -241,7 +235,7 @@ set foldcolumn=4
 set foldmethod=marker
 set foldlevelstart=0
 
-function! MyFoldText()  "  {{{2
+function! MyFoldText()  "--------------------------------------------------{{{2
   let line = getline(v:foldstart)
 
   let nucolwidth = &fdc + &number * &numberwidth
@@ -259,63 +253,63 @@ endfunction  "  2}}}
 set foldtext=MyFoldText()
 
 " 1}}}
-
+" Fuctional & Filetype settings:-------------------------------------------{{{1
 " Disables automatic commenting on newline:
-	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Goyo plugin makes text more readable when writing prose:
-	map <leader>f :Goyo \| set bg=light \| set linebreak<CR>
+map <leader>f :Goyo \| set bg=light \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
-	map <leader>o :setlocal spell! spelllang=en_us<CR>
+map <leader>o :setlocal spell! spelllang=en_us<CR>
 
 " vimling:
-	nm <leader>d :call ToggleDeadKeys()<CR>
-	imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
-	nm <leader>i :call ToggleIPA()<CR>
-	imap <leader>i <esc>:call ToggleIPA()<CR>a
-	nm <leader>q :call ToggleProse()<CR>
+nm <leader>d :call ToggleDeadKeys()<CR>
+imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
+nm <leader>i :call ToggleIPA()<CR>
+imap <leader>i <esc>:call ToggleIPA()<CR>a
+nm <leader>q :call ToggleProse()<CR>
 
 " Check file in shellcheck:
-	" map <leader>s :!clear && shellcheck %<CR>
+" map <leader>s :!clear && shellcheck %<CR>
 
 " Replace all is aliased to S.
-	" nnoremap S :%s//g<Left><Left>
+" nnoremap S :%s//g<Left><Left>
 
 " Compile document, be it groff/LaTeX/markdown/etc.
-	map <leader>c :w! \| !compiler <c-r>%<CR>
+map <leader>c :w! \| !compiler <c-r>%<CR>
 
 " Open corresponding .pdf/.html or preview
-	map <leader>p :!opout <c-r>%<CR><CR>
+map <leader>p :!opout <c-r>%<CR><CR>
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
-	autocmd VimLeave *.tex !texclear %
+autocmd VimLeave *.tex !texclear %
 
 " Ensure files are read as what I want:
-	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-	let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
-	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
-	autocmd BufRead,BufNewFile *.tex set filetype=tex
+let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
+autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
+autocmd BufRead,BufNewFile *.tex set filetype=tex
 
 " Enable Goyo by default for mutt writting
 	" Goyo's width will be the line limit in mutt.
-	autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
-	autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo \| set bg=light
+autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
+autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo \| set bg=light
 
 " Automatically deletes all trailing whitespace on save.
-"	autocmd BufWritePre * %s/\s\+$//e
+" autocmd BufWritePre * %s/\s\+$//e
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
-	autocmd BufWritePost ~/.bmdirs,~/.bmfiles !shortcuts
+autocmd BufWritePost ~/.bmdirs,~/.bmfiles !shortcuts
 
 " Run xrdb whenever Xdefaults or Xresources are updated.
-	autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
+autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
 " Navigating with guides
-	inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-	vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-	map <leader><leader> <Esc>/<++><Enter>"_c4l
+inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
+map <leader><leader> <Esc>/<++><Enter>"_c4l
 
 """LATEX:------------------------------------------------------------------{{{1
 	" Word count:
@@ -428,3 +422,4 @@ set foldtext=MyFoldText()
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
 	autocmd FileType xml inoremap ,a <a href="<++>"><++></a><++><Esc>F"ci"
 " 1}}}
+" --- end of init.vim file ---
