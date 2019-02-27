@@ -1,4 +1,4 @@
-" neovim config file - init.vim
+" neovim config file - ~/.config/nvim/init.vim
 " Author: George Kaimakis
 " Github: https://github.com/geokai
 " Date:   24 02 2019
@@ -67,6 +67,13 @@ set splitbelow
 set splitright
 
 " Tabs, spaces and wrapping:-----------------------------------------------{{{1
+
+" default tab settings:
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
 if has("autocmd")
     " Enable file type detection
     filetype on
@@ -75,11 +82,6 @@ if has("autocmd")
     autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType vim setlocal ts=4 sts=4 sw=4 expandtab
-else
-    set tabstop=4
-    set shiftwidth=4
-    set softtabstop=4
-    set expandtab
 endif
 
 set wrap
@@ -89,7 +91,7 @@ nnoremap <silent> <leader>wr <ESC>:set wrap!<CR><ESC>
 " Make (neo)vim able to edit crontab files w/o exploding! <mb not needed>
 " set backupskip=/tmp/*,/private/tmp/*
 
-" Themes:------------------------------------------------------------------{{{1
+" Themes & Highlighting:---------------------------------------------------{{{1
 " place in the colors directory ~/.config/nvim/colors using curl -o
 colorscheme badwolf "https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim
 " colorscheme molokai "https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
@@ -112,10 +114,10 @@ set showmatch
 set wildmode=longest,list,full
 
 " Useful F-key mappings:---------------------------------------------------{{{1
-map <F2> <ESC>i#!/bin/bash<ESC>o<ESC>
-map <F3> <ESC>i#!/usr/local/bin/python3<ESC>o<ESC>
-map <F4> <ESC>o# This file was created on <ESC>:r!date "+\%x"<ESC>kJ0<ESC>
-map <F5> <ESC>o# Author: George Kaimakis - https://github.com/geokai<ESC>o<ESC>
+nnoremap <F2> <ESC>i#!/bin/bash<ESC>o<ESC>
+nnoremap <F3> <ESC>i#!/usr/local/bin/python3<ESC>o<ESC>
+nnoremap <F4> <ESC>o# This file was created on <ESC>:r!date "+\%x"<ESC>kJ0<ESC>
+nnoremap <F5> <ESC>o# Author: George Kaimakis - https://github.com/geokai<ESC>o<ESC>
 
 " Re-Mappings:-------------------------------------------------------------{{{1
 " Toggle relativenumber:
@@ -134,7 +136,7 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " -all-caps & continue in INSERT mode
 inoremap <c-u> <esc>viwUea
 " -all-caps & continue in NORMAL mode
-nnoremap <c-u> viwUea<ESC>
+nnoremap <c-u> viwUe<ESC>
 " -add missing ':' to end of statements
 nnoremap <leader>: mqA:<ESC>`q
 " -add missing ';' to end of statements
@@ -143,11 +145,11 @@ nnoremap <leader>; mqA;<ESC>`q
 nnoremap <silent> <leader>nh :nohl<cr>
 
 " Nerd tree
-map <C-n> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Open my bibliography file in split
-map <leader>b :vsp<space>$REFBIB<CR>
+nnoremap <leader>b :vsp<space>$REFBIB<CR>
 " map <leader>r :vsp<space>$REFER<CR>
 
 " quick pairs in INSERT mode
@@ -197,7 +199,7 @@ vnoremap <down> <Nop>
 map <localleader> <Plug>(easymotion-prefix)
 
 " Character-wise motion
-nmap <localleader>s <Plug>(easymotion-overwin-f)
+map <localleader>s <Plug>(easymotion-overwin-f)
 
 " Disable default mappings:
 let g:EasyMotion_do_mapping = 0
@@ -266,17 +268,17 @@ set foldtext=MyFoldText()
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Goyo plugin makes text more readable when writing prose:
-map <leader>f :Goyo \| set bg=light \| set linebreak<CR>
+nnoremap <leader>f :Goyo \| set bg=light \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
-map <leader>o :setlocal spell! spelllang=en_us<CR>
+nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
 
 " vimling:
-nm <leader>d :call ToggleDeadKeys()<CR>
-imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
-nm <leader>i :call ToggleIPA()<CR>
-imap <leader>i <esc>:call ToggleIPA()<CR>a
-nm <leader>q :call ToggleProse()<CR>
+nnoremap <leader>d :call ToggleDeadKeys()<CR>
+inoremap <leader>d <esc>:call ToggleDeadKeys()<CR>a
+nnoremap <leader>i :call ToggleIPA()<CR>
+inoremap <leader>i <esc>:call ToggleIPA()<CR>a
+nnoremap <leader>q :call ToggleProse()<CR>
 
 " Check file in shellcheck:
 " map <leader>s :!clear && shellcheck %<CR>
@@ -285,10 +287,10 @@ nm <leader>q :call ToggleProse()<CR>
 " nnoremap S :%s//g<Left><Left>
 
 " Compile document, be it groff/LaTeX/markdown/etc.
-map <leader>c :w! \| !compiler <c-r>%<CR>
+nnoremap <leader>c :w! \| !compiler <c-r>%<CR>
 
 " Open corresponding .pdf/.html or preview
-map <leader>p :!opout <c-r>%<CR><CR>
+nnoremap <leader>p :!opout <c-r>%<CR><CR>
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
 autocmd VimLeave *.tex !texclear %
@@ -315,13 +317,13 @@ autocmd BufWritePost ~/.bmdirs,~/.bmfiles !shortcuts
 autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 
 " Navigating with guides
+nnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-map <leader><leader> <Esc>/<++><Enter>"_c4l
 
 """LATEX:------------------------------------------------------------------{{{1
 	" Word count:
-	autocmd FileType tex map <leader>w :w !detex \| wc -w<CR>
+	autocmd FileType tex nnoremap <leader>w :w !detex \| wc -w<CR>
 	" Code snippets
 	autocmd FileType tex inoremap ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
 	autocmd FileType tex inoremap ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
@@ -360,6 +362,9 @@ map <leader><leader> <Esc>/<++><Enter>"_c4l
 	autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
 
 """HTML:-------------------------------------------------------------------{{{1
+    " do not wrap html files:
+    " autocmd BufWritePre,BufRead *.html setlocal nowrap
+    " awesome keybindings:
 	autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
 	autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i
 	autocmd FileType html inoremap ,1 <h1></h1><Enter><Enter><++><Esc>2kf<i
@@ -405,7 +410,7 @@ map <leader><leader> <Esc>/<++><Enter>"_c4l
 	autocmd FileType html inoremap ù &ugrave;
 
 """MARKDOWN:---------------------------------------------------------------{{{1
-	autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
+	autocmd Filetype markdown,rmd nnoremap <leader>w yiWi[<esc>Ea](<esc>pa)
 	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
 	autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
 	autocmd Filetype markdown,rmd inoremap ,s ~~~~<++><Esc>F~hi
