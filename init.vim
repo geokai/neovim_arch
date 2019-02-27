@@ -82,6 +82,9 @@ else
     set expandtab
 endif
 
+set wrap
+nnoremap <silent> <leader>wr <ESC>:set wrap!<CR><ESC>
+
 " Crontab Safe:------------------------------------------------------------{{{1
 " Make (neo)vim able to edit crontab files w/o exploding! <mb not needed>
 " set backupskip=/tmp/*,/private/tmp/*
