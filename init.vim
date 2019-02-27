@@ -19,7 +19,6 @@
 " curl -fL https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -o badwolf.vim
 
 " Vimplug:-----------------------------------------------------------------{{{1
-
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-surround'  " Put stuff around stuff
 Plug 'tpope/vim-unimpaired'  " Pairs of handy bracket mappings + more
@@ -41,7 +40,6 @@ Plug 'ying17zi/vim-live-latex-preview'  " LaTeX coolness
 call plug#end()
 
 " General setup:-----------------------------------------------------------{{{1
-
 let mapleader = ","
 let maplocalleader = "\\"
 
@@ -52,9 +50,9 @@ set encoding=utf-8
 " set mouse=a
 set clipboard=unnamedplus
 set shortmess+=Iw
+set textwidth=80
 
 " Basic Settngs:-----------------------------------------------------------{{{1
-
 set number
 
 set list
@@ -64,24 +62,36 @@ set title
 set scrolloff=5
 set noshowmode
 
-" Tabs, spaces and wrapping
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-set textwidth=79
-set colorcolumn=+1
-
 " Splits - feels more natural
 set splitbelow
 set splitright
 
-" Themes:------------------------------------------------------------------{{{1
+" Tabs, spaces and wrapping:-----------------------------------------------{{{1
+if has("autocmd")
+    " Enable file type detection
+    filetype on
+    autocmd FileType c setlocal ts=4 sts=4 sw=4 expandtab
+    autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType vim setlocal ts=4 sts=4 sw=4 expandtab
+else
+    set tabstop=4
+    set shiftwidth=4
+    set softtabstop=4
+    set expandtab
+endif
 
+" Crontab Safe:------------------------------------------------------------{{{1
+" Make (neo)vim able to edit crontab files w/o exploding! <mb not needed>
+" set backupskip=/tmp/*,/private/tmp/*
+
+" Themes:------------------------------------------------------------------{{{1
 " place in the colors directory ~/.config/nvim/colors using curl -o
 colorscheme badwolf "https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim
 " colorscheme molokai "https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
 
+set colorcolumn=+1
 set background=dark
 set cursorline
 highlight cursorline ctermbg=234 ctermfg=none cterm=none
@@ -91,7 +101,6 @@ highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
 highlight nontext ctermfg=darkgrey ctermbg=none
 
 " Finding And Autocomplete:------------------------------------------------{{{1
-
 set path+=**
 set wildmenu
 set ignorecase
@@ -106,7 +115,6 @@ map <F4> <ESC>o# This file was created on <ESC>:r!date "+\%x"<ESC>kJ0<ESC>
 map <F5> <ESC>o# Author: George Kaimakis - https://github.com/geokai<ESC>o<ESC>
 
 " Re-Mappings:-------------------------------------------------------------{{{1
-
 " Toggle relativenumber:
 " use relative numbering - Use 'vim-unimpaired' [or & ]or, to toggle: =or
 " inoremap <silent> <leader>u <esc>:set relativenumber!<CR>a
@@ -182,7 +190,6 @@ vnoremap <down> <Nop>
 " 2}}}
 
 " EasyMotion:--------------------------------------------------------------{{{1
-
 " Remap EasyMotion leader key:
 map <localleader> <Plug>(easymotion-prefix)
 
@@ -216,7 +223,6 @@ map <localleader>e <Plug>(easymotion-bd-e)
 map <localleader>E <Plug>(easymotion-bd-E)
 
 " Navigation:--------------------------------------------------------------{{{1
-
 " Shortcutting split navigation, saving a keypress:
 " map <C-h> <C-w>h
 " map <C-j> <C-w>j
@@ -228,7 +234,6 @@ nnoremap <leader>n <ESC>:tabn<CR>
 nnoremap <leader>p <ESC>:tabp<CR>
 
 " Folding:-----------------------------------------------------------------{{{1
-
 highlight Foldcolumn ctermfg=Darkgrey ctermbg=0 cterm=BOLD
 highlight Folded ctermfg=Darkgrey ctermbg=NONE cterm=none
 set foldcolumn=4
@@ -396,11 +401,6 @@ map <leader><leader> <Esc>/<++><Enter>"_c4l
 	autocmd FileType html inoremap ò &ograve;
 	autocmd FileType html inoremap ù &ugrave;
 
-""".bib:-------------------------------------------------------------------{{{1
-	autocmd FileType bib inoremap ,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
-	autocmd FileType bib inoremap ,b @book{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>6kA,<Esc>i
-	autocmd FileType bib inoremap ,c @incollection{<Enter>author<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>booktitle<Space>=<Space>{<++>},<Enter>editor<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
-
 """MARKDOWN:---------------------------------------------------------------{{{1
 	autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
 	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
@@ -418,8 +418,13 @@ map <leader><leader> <Esc>/<++><Enter>"_c4l
 	autocmd Filetype rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
 	autocmd Filetype rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
 
+""".bib:-------------------------------------------------------------------{{{1
+	autocmd FileType bib inoremap ,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
+	autocmd FileType bib inoremap ,b @book{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>6kA,<Esc>i
+	autocmd FileType bib inoremap ,c @incollection{<Enter>author<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>booktitle<Space>=<Space>{<++>},<Enter>editor<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
+
 """.xml:-------------------------------------------------------------------{{{1
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
 	autocmd FileType xml inoremap ,a <a href="<++>"><++></a><++><Esc>F"ci"
 " 1}}}
-" --- end of init.vim file ---
+"""""""""""""""""""" --- end of init.vim file --- """"""""""""""""""""
