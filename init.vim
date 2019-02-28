@@ -362,8 +362,16 @@ vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 	autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
 
 """HTML:-------------------------------------------------------------------{{{1
+    " do not auto line-break html files:
+    " generate folds:
     " do not wrap html files:
-    " autocmd BufWritePre,BufRead *.html setlocal nowrap
+    augroup filetype_html
+        autocmd!
+        autocmd FileType html setlocal textwidth=0
+        autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+        autocmd BufWritePre,BufRead *.html setlocal nowrap
+    augroup END
+
     " awesome keybindings:
 	autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i
 	autocmd FileType html inoremap ,it <em></em><Space><++><Esc>FeT>i
@@ -373,9 +381,9 @@ vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 	autocmd FileType html inoremap ,p <p></p><Enter><Enter><++><Esc>02kf>a
 	autocmd FileType html inoremap ,a <a<Space>href=""><++></a><Space><++><Esc>14hi
 	autocmd FileType html inoremap ,e <a<Space>target="_blank"<Space>href=""><++></a><Space><++><Esc>14hi
-	autocmd FileType html inoremap ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+	autocmd FileType html inoremap ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03k2f<i
 	autocmd FileType html inoremap ,li <Esc>o<li></li><Esc>F>a
-	autocmd FileType html inoremap ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+	autocmd FileType html inoremap ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03k2f<i
 	autocmd FileType html inoremap ,im <img src="" alt="<++>"><++><esc>Fcf"a
 	autocmd FileType html inoremap ,td <td></td><++><Esc>Fdcit
 	autocmd FileType html inoremap ,tr <tr></tr><Enter><++><Esc>kf<i
@@ -434,5 +442,8 @@ vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 """.xml:-------------------------------------------------------------------{{{1
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
 	autocmd FileType xml inoremap ,a <a href="<++>"><++></a><++><Esc>F"ci"
+
+" learning vim the hard way:-----------------------------------------------{{{1
+
 " 1}}}
 """""""""""""""""""" --- end of init.vim file --- """"""""""""""""""""
