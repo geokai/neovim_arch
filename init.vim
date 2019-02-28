@@ -133,6 +133,7 @@ vnoremap <C-c> "+y
 nnoremap <leader>ev :tabnew $MYVIMRC<cr>
 " source the vimrc file
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
 " -all-caps & continue in INSERT mode
 inoremap <c-u> <esc>viwUea
 " -all-caps & continue in NORMAL mode
@@ -242,8 +243,13 @@ nnoremap <leader>p <ESC>:tabp<CR>
 highlight Foldcolumn ctermfg=Darkgrey ctermbg=0 cterm=BOLD
 highlight Folded ctermfg=Darkgrey ctermbg=NONE cterm=none
 set foldcolumn=4
-set foldmethod=marker
-set foldlevelstart=0
+
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim setlocal foldlevelstart=0
+augroup END
+
 
 function! MyFoldText()  "--------------------------------------------------{{{2
   let line = getline(v:foldstart)
@@ -271,7 +277,7 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 nnoremap <leader>f :Goyo \| set bg=light \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
-nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
+" nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
 
 " vimling:
 nnoremap <leader>d :call ToggleDeadKeys()<CR>
@@ -369,6 +375,8 @@ vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
         autocmd!
         autocmd FileType html setlocal textwidth=0
         autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+        autocmd FileType html setlocal foldmethod=manual
+        autocmd FileType html setlocal foldlevelstart=0
         autocmd BufWritePre,BufRead *.html setlocal nowrap
     augroup END
 
@@ -446,4 +454,5 @@ vnoremap <leader><leader> <Esc>/<++><Enter>"_c4l
 " learning vim the hard way:-----------------------------------------------{{{1
 
 " 1}}}
+
 """""""""""""""""""" --- end of init.vim file --- """"""""""""""""""""
