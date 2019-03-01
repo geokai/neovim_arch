@@ -113,6 +113,8 @@ set smartcase
 set showmatch
 set wildmode=longest,list,full
 
+" Ctrl-p:------------------------------------------------------------------{{{1
+
 " Useful F-key mappings:---------------------------------------------------{{{1
 nnoremap <F2> <ESC>i#!/bin/bash<ESC>o<ESC>
 nnoremap <F3> <ESC>i#!/usr/local/bin/python3<ESC>o<ESC>
