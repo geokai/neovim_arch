@@ -281,12 +281,12 @@ nnoremap <leader>f :Goyo \| set bg=light \| set linebreak<CR>
 " Spell-check set to <leader>o, 'o' for 'orthography':
 " nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
 
-" vimling:
-nnoremap <leader>d :call ToggleDeadKeys()<CR>
-inoremap <leader>d <esc>:call ToggleDeadKeys()<CR>a
-nnoremap <leader>i :call ToggleIPA()<CR>
-inoremap <leader>i <esc>:call ToggleIPA()<CR>a
-nnoremap <leader>q :call ToggleProse()<CR>
+" vimling - special character and accent marks key combinations:
+nnoremap <leader><leader>d :call ToggleDeadKeys()<CR>
+inoremap <leader><leader>d <esc>:call ToggleDeadKeys()<CR>a
+nnoremap <leader><leader>i :call ToggleIPA()<CR>
+inoremap <leader><leader>i <esc>:call ToggleIPA()<CR>a
+nnoremap <leader><leader>q :call ToggleProse()<CR>
 
 " Check file in shellcheck:
 " map <leader>s :!clear && shellcheck %<CR>
